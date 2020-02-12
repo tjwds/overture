@@ -41,6 +41,15 @@ const AbstractControlView = Class({
     isFocused: false,
 
     /**
+        Property (private): O.AbstractControlView#isFocusedVisible
+        Type: Boolean
+
+        Represents whether or the control currently has focus due to an action
+        NOT taken by a click.
+    */
+    isFocusedVisible: false,
+
+    /**
         Property: O.AbstractControlView#label
         Type: String|Element|null
         Default: ''
@@ -329,7 +338,44 @@ const AbstractControlView = Class({
             'isFocused',
             event.type === 'focus' && event.target === this._domControl
         );
+        if ( event.type !== 'focus' && event.target === this._domControl ) {
+            this.set( 'isFocusedVisible', false );
+        }
+        this._updateIsFocusedVisible();
     }.on( 'focus', 'blur' ),
+
+    /**
+        Method (private): O.AbstractControlView#_updateIsFocusedVisible
+
+        Updates the <#isFocusedVisible> property if focus is given to an element
+        as the result of an action NOT taken by a click.
+    */
+    _updateIsFocusedVisible: function () {
+        if ( this.get( 'isFocused' ) && !this.get( '_isClickNavigation' ) ) {
+            this.set( 'isFocusedVisible', true );
+        }
+        this.set( '_isClickNavigation', false );
+    }.queue( 'after' ),
+
+    /**
+        Property: O.AbstractControlView#isClickNavigation
+        Type: Boolean
+
+        Helper to determine the cause of a focus action.
+    */
+    _isClickNavigation: false,
+
+    /**
+        Method (private): O.AbstractControlView#_addClickToFocusEventChain
+
+        Updates the <#_isClickNavigation> property.  Uses mousedown due to event
+        timing.  We add the _isClickNavigation property regardless of whether
+        or not the element already has focus to keep the element's focus style
+        consistent as the user interacts with it.
+    */
+    _addClickToFocusEventChain: function (/* event */) {
+        this.set( '_isClickNavigation', true );
+    }.on( 'mousedown' ),
 
     // --- Activate ---
 
