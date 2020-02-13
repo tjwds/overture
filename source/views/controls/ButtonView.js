@@ -146,9 +146,10 @@ const ButtonView = Class({
             ( this.get( 'shortcut' ) ? ' v-Button--hasShortcut' : '' ) +
             ( this.get( 'isActive' ) ? ' is-active' : '' ) +
             ( this.get( 'isWaiting' ) ? ' is-waiting' : '' ) +
-            ( this.get( 'isDisabled' ) ? ' is-disabled' : '' );
+            ( this.get( 'isDisabled' ) ? ' is-disabled' : '' ) +
+            ( this.get( 'isFocusedVisible' ) ? ' is-focused-visible' : '' );
     }.property( 'type', 'icon', 'shortcut', 'isActive', 'isWaiting',
-                'isDisabled' ),
+                'isDisabled', 'isFocusedVisible' ),
 
     /**
         Method: O.ButtonView#draw
