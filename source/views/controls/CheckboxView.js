@@ -35,9 +35,10 @@ const CheckboxView = Class({
         const type = this.get( 'type' );
         return 'v-Checkbox ' +
             ( this.get( 'value' ) ? 'is-checked' : 'is-unchecked' ) +
+            ( this.get( 'isFocusedVisible' ) ? ' is-focused-visible' : '' ) +
             ( this.get( 'isDisabled' ) ? ' is-disabled' : '' ) +
             ( type ? ' ' + type : '' );
-    }.property( 'type', 'value', 'isDisabled' ),
+    }.property( 'type', 'value', 'isFocusedVisible', 'isDisabled' ),
 
     /**
         Method: O.CheckboxView#draw
