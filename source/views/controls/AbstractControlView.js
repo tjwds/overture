@@ -326,6 +326,15 @@ const AbstractControlView = Class({
     },
 
     /**
+        Property: O.AbstractControlView#useParentFocus
+        Type: Boolean
+
+        Set if the element needs focus styling when the parent is selected (see
+        FileButtonView).
+    */
+   useParentFocus: false,
+
+    /**
         Method (private): O.AbstractControlView#_updateIsFocused
 
         Updates the <#isFocused> property.
@@ -336,9 +345,11 @@ const AbstractControlView = Class({
     _updateIsFocused: function ( event ) {
         this.set(
             'isFocused',
-            event.type === 'focus' && event.target === this._domControl
+            event.type === 'focus' && ( event.target === this._domControl ||
+                    this.get( 'useParentFocus' ) )
         );
-        if ( event.type !== 'focus' && event.target === this._domControl ) {
+        if ( event.type !== 'focus' && ( event.target === this._domControl ||
+                this.get( 'useParentFocus' ) ) ) {
             this.set( 'isFocusedVisible', false );
         }
         this._updateIsFocusedVisible();
@@ -358,7 +369,7 @@ const AbstractControlView = Class({
     }.queue( 'after' ),
 
     /**
-        Property: O.AbstractControlView#isClickNavigation
+        Property (private): O.AbstractControlView#_isClickNavigation
         Type: Boolean
 
         Helper to determine the cause of a focus action.

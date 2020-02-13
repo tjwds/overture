@@ -62,6 +62,9 @@ const FileButtonView = Class({
     */
     acceptOnlyTypes: '',
 
+    // Overwrites AbstractControlView.
+    useParentFocus: true,
+
     // --- Render ---
 
     /**
