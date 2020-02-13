@@ -47,9 +47,10 @@ const SelectView = Class({
         const type = this.get( 'type' );
         return 'v-Select' +
             ( this.get( 'isFocused' ) ? ' is-focused' : '' ) +
+            ( this.get( 'isFocusedVisible' ) ? ' is-focused-visible' : '' ) +
             ( this.get( 'isDisabled' ) ? ' is-disabled' : '' ) +
             ( type ? ' ' + type : '' );
-    }.property( 'type', 'isFocused', 'isDisabled' ),
+    }.property( 'type', 'isFocused', 'isFocusedVisible', 'isDisabled' ),
 
     /**
         Method: O.SelectView#draw
