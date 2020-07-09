@@ -11,6 +11,7 @@ import ScrollView from '../containers/ScrollView';
 import AbstractControlView from './AbstractControlView';
 
 const isFirefox = browser === 'firefox';
+const isSafari = browser === 'safari';
 
 /**
     Class: O.TextView
@@ -299,11 +300,12 @@ const TextView = Class({
     },
 
     redrawTextHeight () {
-        // Firefox gets pathologically slow when resizing really large text
-        // areas, so automatically turn this off in such a case.
+        // Firefox and Safari get pathologically slow when resizing really large
+        // text areas, so automatically turn this off in such a case.
         // 2^13 chars is an arbitrary cut off point that seems to be reasonable
         // in practice
-        if ( isFirefox && ( this.get( 'value' ) || '' ).length > 8192 ) {
+        if ( ( isFirefox || isSafari ) &&
+                ( this.get( 'value' ) || '' ).length > 8192 ) {
             this.set( 'isExpanding', false );
             return;
         }
